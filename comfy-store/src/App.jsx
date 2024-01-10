@@ -16,7 +16,6 @@ import {
 import { ErrorElement } from './components';
 
 // loaders
-
 import { loader as landingLoader } from '../src/pages/Landing';
 
 // actions
