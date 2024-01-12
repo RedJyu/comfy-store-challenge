@@ -17,6 +17,7 @@ import { ErrorElement } from './components';
 
 // loaders
 import { loader as landingLoader } from '../src/pages/Landing';
+import { loader as singleProductLoader } from '../src/pages/SingleProduct';
 
 // actions
 
@@ -39,6 +40,8 @@ const router = createBrowserRouter([
       {
         path: 'products/:id',
         element: <SingleProduct />,
+        errorElement: <ErrorElement />,
+        loader: singleProductLoader,
       },
       {
         path: 'cart',
