@@ -1,4 +1,10 @@
+import ProductList from './ProductList';
+
 const ProductsContainer = () => {
-  return <div>ProductsContainer</div>;
+  return (
+    <div>
+      <ProductList />
+    </div>
+  );
 };
 export default ProductsContainer;
