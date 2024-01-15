@@ -1,10 +1,12 @@
 import ProductList from './ProductList';
+import ProductsGrid from './ProductsGrid';
 
 const ProductsContainer = () => {
   return (
-    <div>
+    <>
       <ProductList />
-    </div>
+      <ProductsGrid />
+    </>
   );
 };
 export default ProductsContainer;
