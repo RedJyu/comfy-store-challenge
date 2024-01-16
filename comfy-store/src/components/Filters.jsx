@@ -1,3 +1,4 @@
+import FormCheckbox from './FormCheckbox';
 import FormInput from './FormInput';
 import FormRange from './FormRange';
 import FormSelect from './FormSelect';
@@ -38,7 +39,8 @@ const Filters = () => {
       />
       {/* price range */}
       <FormRange name='price' label='select price' size='range-sm' />
-
+      {/* shipping */}
+      <FormCheckbox name='shipping' label='free shipping' size='checkbox-sm' />
       {/* buttons */}
       <button type='submit' className='btn btn-primary btn-sm'>
         search
