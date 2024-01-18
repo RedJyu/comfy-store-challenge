@@ -2,6 +2,8 @@ import { useLoaderData } from 'react-router-dom';
 import { formatPrice, customFetch, generateAmount } from '../utils';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../features/Cart/cartSlice';
 
 export const loader = async ({ params }) => {
   const response = await customFetch(`/products/${params.id}`);
@@ -18,6 +20,23 @@ const SingleProduct = () => {
   const handleAmount = (e) => {
     // parseInt is needed because it will be input so it will be text and we want to have number
     setAmount(parseInt(e.target.value));
+  };
+  const cartProduct = {
+    // prod.id+color so different color item is separate item in cart
+    cartID: product.id + productColor,
+    productID: product.id,
+    image,
+    title,
+    price,
+    company,
+    productColor,
+    amount,
+  };
+
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    dispatch(addItem({ product: cartProduct }));
   };
   return (
     <section>
@@ -88,7 +107,7 @@ const SingleProduct = () => {
           <button
             className='btn btn-secondary btn-md mt-6'
             type='button'
-            onClick={() => console.log(productColor, amount)}
+            onClick={addToCart}
           >
             add to basket
           </button>
