@@ -27,7 +27,7 @@ const Navbar = () => {
   }, [theme]);
 
   const numItemsInCart = useSelector((state) => {
-    state.cartState.numItemsInCart;
+    return state.cartState.numItemsInCart;
   });
 
   return (
