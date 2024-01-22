@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+import { formatPrice } from '../utils';
+
 const CartTotals = () => {
   return <h1 className='text-3xl'> CartTotals</h1>;
 };
