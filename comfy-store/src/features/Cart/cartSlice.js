@@ -51,6 +51,11 @@ const cartSlice = createSlice({
     editItem: (state, action) => {
       const { cartID, amount } = action.payload;
       const item = state.cartItems.find((i) => i.cartID === product.cartID);
+      state.numItemsInCart += amount - item.amount;
+      state.cartTotal += item.price * (amount - item.amount);
+      item.amount = amount;
+      cartSlice.caseReducers.calculateTotals(state);
+      toast.success('cart updated');
     },
     calculateTotals: (state) => {
       state.tax = 0.23 * state.cartTotal;
