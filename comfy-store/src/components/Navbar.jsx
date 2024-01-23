@@ -2,29 +2,14 @@ import { NavLink } from 'react-router-dom';
 import { BsCart3, BsMoonFill, BsSunFill } from 'react-icons/bs';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import NavLinks from './NavLinks';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../features/Users/userSlice';
 
-const themes = {
-  cupcake: 'cupcake',
-  dark: 'dark',
-};
-const getThemeFromLocalStorage = () => {
-  return localStorage.getItem('theme') || themes.cupcake;
-};
 const Navbar = () => {
-  const [theme, setTheme] = useState(getThemeFromLocalStorage());
-
+  const dispatch = useDispatch();
   const handleTheme = () => {
-    const { cupcake, dark } = themes;
-    const newTheme = theme === cupcake ? dark : cupcake;
-    setTheme(newTheme);
+    dispatch(toggleTheme());
   };
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   const numItemsInCart = useSelector((state) => {
     return state.cartState.numItemsInCart;
