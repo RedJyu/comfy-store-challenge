@@ -1,5 +1,15 @@
 import { FormInput, SubmitBtn } from '../components';
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, redirect, useNavigate } from 'react-router-dom';
+import { customFetch } from '../utils';
+import { toast } from 'react-toastify';
+import { loginUser } from '../features/Users/userSlice';
+import { useDispatch } from 'react-redux';
+
+// it works when we access app.js not the when submitting login form, to prevent that we need to make it into function and then actual function
+export const action = (store) => async () => {
+  console.log(store);
+  return null;
+};
 const Login = () => {
   return (
     <section className='h-screen grid place-items-center'>
