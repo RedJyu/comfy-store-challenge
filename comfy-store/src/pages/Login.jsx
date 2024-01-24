@@ -6,10 +6,25 @@ import { loginUser } from '../features/Users/userSlice';
 import { useDispatch } from 'react-redux';
 
 // it works when we access app.js not the when submitting login form, to prevent that we need to make it into function and then actual function
-export const action = (store) => async () => {
-  console.log(store);
-  return null;
-};
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await customFetch.post('/auth/local', data);
+      store.dispatch(loginUser(response.data));
+      toast.success('logged in');
+      return redirect('/');
+      return null;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.error?.message || 'please check credentials';
+      toast.error(errorMessage);
+      return null;
+    }
+  };
 const Login = () => {
   return (
     <section className='h-screen grid place-items-center'>
