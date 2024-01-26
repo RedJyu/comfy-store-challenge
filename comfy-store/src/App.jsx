@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: 'checkout',
         element: <Checkout />,
-        loader: checkoutLoader,
+        loader: checkoutLoader(store),
       },
       {
         path: 'orders',
