@@ -1,11 +1,15 @@
+import React, { useState } from 'react';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 const ComplexPaginationContainer = () => {
   const { meta } = useLoaderData();
   const { pageCount, page } = meta.pagination;
-
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
+
+  const [showPageInput, setShowPageInput] = useState(false);
+  const [inputPageNumber, setInputPageNumber] = useState('');
+
   const handlePageChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);
     searchParams.set('page', pageNumber);
@@ -26,6 +30,21 @@ const ComplexPaginationContainer = () => {
     );
   };
 
+  const handleInputChange = (e) => {
+    setInputPageNumber(e.target.value);
+  };
+
+  const handleInputKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      const pageNumber = parseInt(inputPageNumber, 10);
+      if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= pageCount) {
+        handlePageChange(pageNumber);
+      }
+      setInputPageNumber('');
+      setShowPageInput(false);
+    }
+  };
+
   const renderPageButtons = () => {
     const pageButtons = [];
     // 1st
@@ -33,7 +52,11 @@ const ComplexPaginationContainer = () => {
     // dots
     if (page > 2) {
       pageButtons.push(
-        <button className='join-item btn btn-xs sm:btn-sm' key='dots-1'>
+        <button
+          className='join-item btn btn-xs sm:btn-sm'
+          key='dots-1'
+          onClick={() => setShowPageInput(true)}
+        >
           ...
         </button>
       );
@@ -45,7 +68,11 @@ const ComplexPaginationContainer = () => {
     // dots
     if (page < pageCount - 1) {
       pageButtons.push(
-        <button className='join-item btn btn-xs sm:btn-sm' key='dots-2'>
+        <button
+          className='join-item btn btn-xs sm:btn-sm'
+          key='dots-2'
+          onClick={() => setShowPageInput(true)}
+        >
           ...
         </button>
       );
@@ -56,6 +83,7 @@ const ComplexPaginationContainer = () => {
     );
     return pageButtons;
   };
+
   if (pageCount < 2) return null;
 
   return (
@@ -72,6 +100,19 @@ const ComplexPaginationContainer = () => {
           Prev
         </button>
         {renderPageButtons()}
+        {showPageInput && (
+          <input
+            type='number'
+            min='1'
+            max={pageCount}
+            value={inputPageNumber}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyPress}
+            className='join-item btn btn-xs sm:btn-md border-none bg-base-500 text-center'
+            style={{ width: '50px' }}
+            autoFocus
+          />
+        )}
         <button
           className='btn btn-xs sm:btn-md join-item'
           onClick={() => {
@@ -86,4 +127,5 @@ const ComplexPaginationContainer = () => {
     </div>
   );
 };
+
 export default ComplexPaginationContainer;
